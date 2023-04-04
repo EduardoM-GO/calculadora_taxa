@@ -1,5 +1,5 @@
 name: calculadora_taxa
-description: A new Flutter project.
+description: App para calcular as taxas com base no valor base
 
 version: 1.0.0+1
 
@@ -10,6 +10,8 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.2
+  shared_preferences: ^2.1.0
+  rx_notifier: ^2.2.1
 
 dev_dependencies:
   flutter_test:
