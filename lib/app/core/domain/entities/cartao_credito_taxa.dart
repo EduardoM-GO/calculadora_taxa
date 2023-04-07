@@ -10,6 +10,11 @@ class CartaoCreditoTaxa extends Taxa {
     required this.percentualTaxaPorParcela,
   });
 
+  const CartaoCreditoTaxa.empty()
+      : percentualTaxaParcelado = 0,
+        percentualTaxaPorParcela = 0,
+        super(percentualTaxa: 0);
+
   @override
   List<Object> get props => [
         percentualTaxa,
