@@ -22,10 +22,9 @@ class CalcularTaxaCartaoDebitoUseCaseImpl
     final result = _repository.getTaxaCartaoDebito();
 
     if (result.isError()) {
-      return result.fold((success) => Failure(Exception()), Failure.new);
+      return Failure(result.exceptionOrNull()!);
     }
-    final percentualTaxa =
-        result.fold((success) => success.percentualTaxa / 100, (failure) => 0);
+    final percentualTaxa = result.getOrThrow().percentualTaxa / 100;
 
     if (valorCalculo.tipoValorBase.isCobrar) {
       final valorTaxa = (valorCalculo.valor * percentualTaxa).casasDecimas(2);

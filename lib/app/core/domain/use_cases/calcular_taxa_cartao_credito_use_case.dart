@@ -1,4 +1,3 @@
-import 'package:calculadora_taxa/app/core/domain/entities/cartao_credito_taxa.dart';
 import 'package:calculadora_taxa/app/core/domain/entities/resultado_taxa_cartao_credito.dart';
 import 'package:calculadora_taxa/app/core/domain/entities/valor_calculo_cartao_credito.dart';
 import 'package:calculadora_taxa/app/core/domain/repositories/taxas_repository.dart';
@@ -23,24 +22,22 @@ class CalcularTaxaCartaoCreditoUseCaseImpl
     final result = _repository.getTaxaCartaoCredito();
 
     if (result.isError()) {
-      return result.fold((success) => Failure(Exception()), Failure.new);
+      return Failure(result.exceptionOrNull()!);
     }
 
-    final cartaoCreditoTaxa = result.fold(
-      (success) => success,
-      (failure) => const CartaoCreditoTaxa.empty(),
-    );
+    final cartaoCreditoTaxa = result.getOrThrow();
+
     final percentualTaxa = (valorCalculo.usarTaxaParcelada
             ? cartaoCreditoTaxa.percentualTaxaParcelado
             : cartaoCreditoTaxa.percentualTaxa) /
         100;
 
-    final percentualTaxaPorParcela =
-        cartaoCreditoTaxa.percentualTaxaPorParcela / 100;
-
     late final double valorRecebido;
     late final double valorCobrado;
+
+    /// Verifica se o valor base é cobraça ou recebimento
     if (valorCalculo.tipoValorBase.isCobrar) {
+      ///Obtem o valor que vai ser descontado no recebimento
       final valorTaxa = (valorCalculo.valor * percentualTaxa).casasDecimas(2);
       valorRecebido = valorCalculo.valor - valorTaxa;
       valorCobrado = valorCalculo.valor;
@@ -49,14 +46,13 @@ class CalcularTaxaCartaoCreditoUseCaseImpl
       valorCobrado =
           (valorCalculo.valor / (1 - percentualTaxa)).casasDecimas(2);
     }
-    late final double valorAcrecimoPorParcela;
 
+    /// Obtem o valor que vai ser aumentado na parcela para o cliente
+    late final double valorAcrescimoParcelaTotal;
     if (valorCalculo.usarTaxaParcelada) {
-      final valorBaseParcela = valorCobrado / valorCalculo.quantidadeParcela;
-      valorAcrecimoPorParcela =
-          (valorBaseParcela * percentualTaxaPorParcela).casasDecimas(2);
+      valorAcrescimoParcelaTotal = valorCobrado * valorCalculo.taxaParcela;
     } else {
-      valorAcrecimoPorParcela = 0;
+      valorAcrescimoParcelaTotal = 0;
     }
 
     return Success(
@@ -64,8 +60,7 @@ class CalcularTaxaCartaoCreditoUseCaseImpl
         valorRecebido: valorRecebido,
         valorCobrado: valorCobrado,
         quantidadeParcela: valorCalculo.quantidadeParcela,
-        valorAcrescimoParcelaTotal:
-            valorAcrecimoPorParcela * valorCalculo.quantidadeParcela,
+        valorAcrescimoParcelaTotal: valorAcrescimoParcelaTotal.casasDecimas(2),
       ),
     );
   }

@@ -26,7 +26,7 @@ void main() {
     );
   });
 
-  group('calcular taxa cartao credito use case  - Valor Cobrado -', () {
+  group('calcular taxa cartao credito use case - Valor Cobrado -', () {
     setUp(
       () => when(() => repository.getTaxaCartaoCredito())
           .thenReturn(Success(cartaoCreditoTaxa)),
@@ -96,6 +96,345 @@ void main() {
       });
     });
 
+    group('calcular taxa cartao credito use case - Parcelado - valor: 259.69 -',
+        () {
+      test('3x', () async {
+        const quantidadeParcela = 3;
+        final result = useCase(
+          valorCalculo: const ValorCalculoCartaoCredito(
+            valor: 259.69,
+            tipoValorBase: TipoValorBase.cobrar,
+            quantidadeParcela: quantidadeParcela,
+          ),
+        );
+
+        expect(result.isSuccess(), true);
+        expect(
+          result.fold(id, id),
+          ResultadoTaxaCartaoCredito(
+            valorRecebido: 249.85,
+            valorCobrado: 259.69,
+            quantidadeParcela: quantidadeParcela,
+            valorAcrescimoParcelaTotal: 18.33,
+          ),
+        );
+      });
+      test('4x', () async {
+        const quantidadeParcela = 4;
+        final result = useCase(
+          valorCalculo: const ValorCalculoCartaoCredito(
+            valor: 259.69,
+            tipoValorBase: TipoValorBase.cobrar,
+            quantidadeParcela: quantidadeParcela,
+          ),
+        );
+
+        expect(result.isSuccess(), true);
+        expect(
+          result.fold(id, id),
+          ResultadoTaxaCartaoCredito(
+            valorRecebido: 249.85,
+            valorCobrado: 259.69,
+            quantidadeParcela: quantidadeParcela,
+            valorAcrescimoParcelaTotal: 23.03,
+          ),
+        );
+      });
+      test('5x', () async {
+        const quantidadeParcela = 5;
+        final result = useCase(
+          valorCalculo: const ValorCalculoCartaoCredito(
+            valor: 259.69,
+            tipoValorBase: TipoValorBase.cobrar,
+            quantidadeParcela: quantidadeParcela,
+          ),
+        );
+
+        expect(result.isSuccess(), true);
+        expect(
+          result.fold(id, id),
+          ResultadoTaxaCartaoCredito(
+            valorRecebido: 249.85,
+            valorCobrado: 259.69,
+            quantidadeParcela: quantidadeParcela,
+            valorAcrescimoParcelaTotal: 27.81,
+          ),
+        );
+      });
+      test('6x', () async {
+        const quantidadeParcela = 6;
+        final result = useCase(
+          valorCalculo: const ValorCalculoCartaoCredito(
+            valor: 259.69,
+            tipoValorBase: TipoValorBase.cobrar,
+            quantidadeParcela: quantidadeParcela,
+          ),
+        );
+
+        expect(result.isSuccess(), true);
+        expect(
+          result.fold(id, id),
+          ResultadoTaxaCartaoCredito(
+            valorRecebido: 249.85,
+            valorCobrado: 259.69,
+            quantidadeParcela: quantidadeParcela,
+            valorAcrescimoParcelaTotal: 32.62,
+          ),
+        );
+      });
+      test('7x', () async {
+        const quantidadeParcela = 7;
+        final result = useCase(
+          valorCalculo: const ValorCalculoCartaoCredito(
+            valor: 259.69,
+            tipoValorBase: TipoValorBase.cobrar,
+            quantidadeParcela: quantidadeParcela,
+          ),
+        );
+
+        expect(result.isSuccess(), true);
+        expect(
+          result.fold(id, id),
+          ResultadoTaxaCartaoCredito(
+            valorRecebido: 249.85,
+            valorCobrado: 259.69,
+            quantidadeParcela: quantidadeParcela,
+            valorAcrescimoParcelaTotal: 37.50,
+          ),
+        );
+      });
+      test('8x', () async {
+        const quantidadeParcela = 8;
+        final result = useCase(
+          valorCalculo: const ValorCalculoCartaoCredito(
+            valor: 259.69,
+            tipoValorBase: TipoValorBase.cobrar,
+            quantidadeParcela: quantidadeParcela,
+          ),
+        );
+
+        expect(result.isSuccess(), true);
+        expect(
+          result.fold(id, id),
+          ResultadoTaxaCartaoCredito(
+            valorRecebido: 249.85,
+            valorCobrado: 259.69,
+            quantidadeParcela: quantidadeParcela,
+            valorAcrescimoParcelaTotal: 42.41,
+          ),
+        );
+      });
+      test('9x', () async {
+        const quantidadeParcela = 9;
+        final result = useCase(
+          valorCalculo: const ValorCalculoCartaoCredito(
+            valor: 259.69,
+            tipoValorBase: TipoValorBase.cobrar,
+            quantidadeParcela: quantidadeParcela,
+          ),
+        );
+
+        expect(result.isSuccess(), true);
+        expect(
+          result.fold(id, id),
+          ResultadoTaxaCartaoCredito(
+            valorRecebido: 249.85,
+            valorCobrado: 259.69,
+            quantidadeParcela: quantidadeParcela,
+            valorAcrescimoParcelaTotal: 47.39,
+          ),
+        );
+      });
+      test('10x', () async {
+        const quantidadeParcela = 10;
+        final result = useCase(
+          valorCalculo: const ValorCalculoCartaoCredito(
+            valor: 259.69,
+            tipoValorBase: TipoValorBase.cobrar,
+            quantidadeParcela: quantidadeParcela,
+          ),
+        );
+
+        expect(result.isSuccess(), true);
+        expect(
+          result.fold(id, id),
+          ResultadoTaxaCartaoCredito(
+            valorRecebido: 249.85,
+            valorCobrado: 259.69,
+            quantidadeParcela: quantidadeParcela,
+            valorAcrescimoParcelaTotal: 52.41,
+          ),
+        );
+      });
+      test('11x', () async {
+        const quantidadeParcela = 11;
+        final result = useCase(
+          valorCalculo: const ValorCalculoCartaoCredito(
+            valor: 259.69,
+            tipoValorBase: TipoValorBase.cobrar,
+            quantidadeParcela: quantidadeParcela,
+          ),
+        );
+
+        expect(result.isSuccess(), true);
+        expect(
+          result.fold(id, id),
+          ResultadoTaxaCartaoCredito(
+            valorRecebido: 249.85,
+            valorCobrado: 259.69,
+            quantidadeParcela: quantidadeParcela,
+            valorAcrescimoParcelaTotal: 57.47,
+          ),
+        );
+      });
+      test('12x', () async {
+        const quantidadeParcela = 12;
+        final result = useCase(
+          valorCalculo: const ValorCalculoCartaoCredito(
+            valor: 259.69,
+            tipoValorBase: TipoValorBase.cobrar,
+            quantidadeParcela: quantidadeParcela,
+          ),
+        );
+
+        expect(result.isSuccess(), true);
+        expect(
+          result.fold(id, id),
+          ResultadoTaxaCartaoCredito(
+            valorRecebido: 249.85,
+            valorCobrado: 259.69,
+            quantidadeParcela: quantidadeParcela,
+            valorAcrescimoParcelaTotal: 62.61,
+          ),
+        );
+      });
+      test('13x', () async {
+        const quantidadeParcela = 13;
+        final result = useCase(
+          valorCalculo: const ValorCalculoCartaoCredito(
+            valor: 259.69,
+            tipoValorBase: TipoValorBase.cobrar,
+            quantidadeParcela: quantidadeParcela,
+          ),
+        );
+
+        expect(result.isSuccess(), true);
+        expect(
+          result.fold(id, id),
+          ResultadoTaxaCartaoCredito(
+            valorRecebido: 249.85,
+            valorCobrado: 259.69,
+            quantidadeParcela: quantidadeParcela,
+            valorAcrescimoParcelaTotal: 67.78,
+          ),
+        );
+      });
+      test('14x', () async {
+        const quantidadeParcela = 14;
+        final result = useCase(
+          valorCalculo: const ValorCalculoCartaoCredito(
+            valor: 259.69,
+            tipoValorBase: TipoValorBase.cobrar,
+            quantidadeParcela: quantidadeParcela,
+          ),
+        );
+
+        expect(result.isSuccess(), true);
+        expect(
+          result.fold(id, id),
+          ResultadoTaxaCartaoCredito(
+            valorRecebido: 249.85,
+            valorCobrado: 259.69,
+            quantidadeParcela: quantidadeParcela,
+            valorAcrescimoParcelaTotal: 73,
+          ),
+        );
+      });
+      test('15x', () async {
+        const quantidadeParcela = 15;
+        final result = useCase(
+          valorCalculo: const ValorCalculoCartaoCredito(
+            valor: 259.69,
+            tipoValorBase: TipoValorBase.cobrar,
+            quantidadeParcela: quantidadeParcela,
+          ),
+        );
+
+        expect(result.isSuccess(), true);
+        expect(
+          result.fold(id, id),
+          ResultadoTaxaCartaoCredito(
+            valorRecebido: 249.85,
+            valorCobrado: 259.69,
+            quantidadeParcela: quantidadeParcela,
+            valorAcrescimoParcelaTotal: 78.27,
+          ),
+        );
+      });
+      test('16x', () async {
+        const quantidadeParcela = 16;
+        final result = useCase(
+          valorCalculo: const ValorCalculoCartaoCredito(
+            valor: 259.69,
+            tipoValorBase: TipoValorBase.cobrar,
+            quantidadeParcela: quantidadeParcela,
+          ),
+        );
+
+        expect(result.isSuccess(), true);
+        expect(
+          result.fold(id, id),
+          ResultadoTaxaCartaoCredito(
+            valorRecebido: 249.85,
+            valorCobrado: 259.69,
+            quantidadeParcela: quantidadeParcela,
+            valorAcrescimoParcelaTotal: 83.62,
+          ),
+        );
+      });
+      test('17x', () async {
+        const quantidadeParcela = 17;
+        final result = useCase(
+          valorCalculo: const ValorCalculoCartaoCredito(
+            valor: 259.69,
+            tipoValorBase: TipoValorBase.cobrar,
+            quantidadeParcela: quantidadeParcela,
+          ),
+        );
+
+        expect(result.isSuccess(), true);
+        expect(
+          result.fold(id, id),
+          ResultadoTaxaCartaoCredito(
+            valorRecebido: 249.85,
+            valorCobrado: 259.69,
+            quantidadeParcela: quantidadeParcela,
+            valorAcrescimoParcelaTotal: 89,
+          ),
+        );
+      });
+      test('18x', () async {
+        const quantidadeParcela = 18;
+        final result = useCase(
+          valorCalculo: const ValorCalculoCartaoCredito(
+            valor: 259.69,
+            tipoValorBase: TipoValorBase.cobrar,
+            quantidadeParcela: quantidadeParcela,
+          ),
+        );
+
+        expect(result.isSuccess(), true);
+        expect(
+          result.fold(id, id),
+          ResultadoTaxaCartaoCredito(
+            valorRecebido: 249.85,
+            valorCobrado: 259.69,
+            quantidadeParcela: quantidadeParcela,
+            valorAcrescimoParcelaTotal: 94.42,
+          ),
+        );
+      });
+    });
     group('Parcelado em duas vezes', () {
       const quantidadeParcela = 2;
       test('100', () async {
@@ -111,10 +450,10 @@ void main() {
         expect(
           result.fold(id, id),
           ResultadoTaxaCartaoCredito(
-            valorRecebido: 96.81,
+            valorRecebido: 96.21,
             valorCobrado: 100,
             quantidadeParcela: quantidadeParcela,
-            valorAcrescimoParcelaTotal: 0,
+            valorAcrescimoParcelaTotal: 5.26,
           ),
         );
       });
@@ -131,10 +470,10 @@ void main() {
         expect(
           result.fold(id, id),
           ResultadoTaxaCartaoCredito(
-            valorRecebido: 193.62,
+            valorRecebido: 192.42,
             valorCobrado: 200,
             quantidadeParcela: quantidadeParcela,
-            valorAcrescimoParcelaTotal: 0,
+            valorAcrescimoParcelaTotal: 10.52,
           ),
         );
       });
@@ -160,53 +499,137 @@ void main() {
       });
     });
   });
-/*
-  group('calcular taxa cartao credito use case  - Valor receber -', () {
+  group('calcular taxa cartao credito use case - Valor Receber -', () {
     setUp(
       () => when(() => repository.getTaxaCartaoCredito())
-          .thenReturn(const Success(Taxa(percentualTaxa: 2.39))),
+          .thenReturn(Success(cartaoCreditoTaxa)),
     );
-    test('100', () async {
-      final result = useCase(
-        valorCalculo: const ValorCalculo(
-          valor: 100,
-          tipoValorBase: TipoValorBase.receber,
-        ),
-      );
 
-      expect(result.isSuccess(), true);
-      expect(
-        result.fold(id, id),
-        const ResultadoTaxa(valorRecebido: 100, valorCobrado: 102.45),
-      );
+    group('Parcelado em uma vez', () {
+      const quantidadeParcela = 1;
+      test('100', () async {
+        final result = useCase(
+          valorCalculo: const ValorCalculoCartaoCredito(
+            valor: 100,
+            tipoValorBase: TipoValorBase.receber,
+            quantidadeParcela: quantidadeParcela,
+          ),
+        );
+
+        expect(result.isSuccess(), true);
+        expect(
+          result.fold(id, id),
+          ResultadoTaxaCartaoCredito(
+            valorRecebido: 100,
+            valorCobrado: 103.30,
+            quantidadeParcela: quantidadeParcela,
+            valorAcrescimoParcelaTotal: 0,
+          ),
+        );
+      });
+      test('200', () async {
+        final result = useCase(
+          valorCalculo: const ValorCalculoCartaoCredito(
+            valor: 200,
+            tipoValorBase: TipoValorBase.receber,
+            quantidadeParcela: quantidadeParcela,
+          ),
+        );
+
+        expect(result.isSuccess(), true);
+        expect(
+          result.fold(id, id),
+          ResultadoTaxaCartaoCredito(
+            valorRecebido: 200,
+            valorCobrado: 206.59,
+            quantidadeParcela: quantidadeParcela,
+            valorAcrescimoParcelaTotal: 0,
+          ),
+        );
+      });
+      test('259.69', () async {
+        final result = useCase(
+          valorCalculo: const ValorCalculoCartaoCredito(
+            valor: 259.69,
+            tipoValorBase: TipoValorBase.receber,
+            quantidadeParcela: quantidadeParcela,
+          ),
+        );
+
+        expect(result.isSuccess(), true);
+        expect(
+          result.fold(id, id),
+          ResultadoTaxaCartaoCredito(
+            valorRecebido: 259.69,
+            valorCobrado: 268.25,
+            quantidadeParcela: quantidadeParcela,
+            valorAcrescimoParcelaTotal: 0,
+          ),
+        );
+      });
     });
-    test('200', () async {
-      final result = useCase(
-        valorCalculo: const ValorCalculo(
-          valor: 200,
-          tipoValorBase: TipoValorBase.receber,
-        ),
-      );
+    group('Parcelado em duas vezes', () {
+      const quantidadeParcela = 2;
+      test('100', () async {
+        final result = useCase(
+          valorCalculo: const ValorCalculoCartaoCredito(
+            valor: 100,
+            tipoValorBase: TipoValorBase.receber,
+            quantidadeParcela: quantidadeParcela,
+          ),
+        );
 
-      expect(result.isSuccess(), true);
-      expect(
-        result.fold(id, id),
-        const ResultadoTaxa(valorRecebido: 200, valorCobrado: 204.9),
-      );
-    });
-    test('259.69', () async {
-      final result = useCase(
-        valorCalculo: const ValorCalculo(
-          valor: 259.69,
-          tipoValorBase: TipoValorBase.receber,
-        ),
-      );
+        expect(result.isSuccess(), true);
+        expect(
+          result.fold(id, id),
+          ResultadoTaxaCartaoCredito(
+            valorRecebido: 100,
+            valorCobrado: 103.94,
+            quantidadeParcela: quantidadeParcela,
+            valorAcrescimoParcelaTotal: 5.47,
+          ),
+        );
+      });
+      test('200', () async {
+        final result = useCase(
+          valorCalculo: const ValorCalculoCartaoCredito(
+            valor: 200,
+            tipoValorBase: TipoValorBase.receber,
+            quantidadeParcela: quantidadeParcela,
+          ),
+        );
 
-      expect(result.isSuccess(), true);
-      expect(
-        result.fold(id, id),
-        const ResultadoTaxa(valorRecebido: 259.69, valorCobrado: 266.05),
-      );
+        expect(result.isSuccess(), true);
+        expect(
+          result.fold(id, id),
+          ResultadoTaxaCartaoCredito(
+            valorRecebido: 200,
+            valorCobrado: 207.88,
+            quantidadeParcela: quantidadeParcela,
+            valorAcrescimoParcelaTotal: 10.93,
+          ),
+        );
+      });
+      test('259.69', () async {
+        final result = useCase(
+          valorCalculo: const ValorCalculoCartaoCredito(
+            valor: 259.69,
+            tipoValorBase: TipoValorBase.receber,
+            quantidadeParcela: quantidadeParcela,
+          ),
+        );
+
+        expect(result.isSuccess(), true);
+        expect(
+          result.fold(id, id),
+          ResultadoTaxaCartaoCredito(
+            valorRecebido: 259.69,
+            valorCobrado: 269.92,
+            quantidadeParcela: quantidadeParcela,
+            valorAcrescimoParcelaTotal: 14.20,
+          ),
+        );
+      });
     });
   });
 
@@ -214,22 +637,24 @@ void main() {
     when(() => repository.getTaxaCartaoCredito())
         .thenReturn(Failure(Exception()));
     final result = useCase(
-      valorCalculo: const ValorCalculo(
+      valorCalculo: const ValorCalculoCartaoCredito(
         valor: 259.69,
         tipoValorBase: TipoValorBase.cobrar,
+        quantidadeParcela: 2,
       ),
     );
     expect(result.isError(), true);
     expect(result.fold(id, id), isA<Exception>());
 
     final resultReceber = useCase(
-      valorCalculo: const ValorCalculo(
+      valorCalculo: const ValorCalculoCartaoCredito(
         valor: 259.69,
         tipoValorBase: TipoValorBase.receber,
+        quantidadeParcela: 2,
       ),
     );
 
     expect(resultReceber.isError(), true);
     expect(resultReceber.fold(id, id), isA<Exception>());
-  });*/
+  });
 }

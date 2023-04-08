@@ -19,22 +19,6 @@ class ResultadoTaxaCartaoCredito extends ResultadoTaxa {
             ((valorCobrado + valorAcrescimoParcelaTotal) / quantidadeParcela)
                 .casasDecimas(2);
 
-  ResultadoTaxaCartaoCredito copyWith({
-    double? valorCobrado,
-    double? valorRecebido,
-    double? valorDaParcela,
-    int? quantidadeParcela,
-    double? valorAcrescimoPorParcela,
-    double? valorAcrescimoParcelaTotal,
-  }) =>
-      ResultadoTaxaCartaoCredito(
-        valorCobrado: valorCobrado ?? this.valorCobrado,
-        valorRecebido: valorRecebido ?? this.valorRecebido,
-        quantidadeParcela: quantidadeParcela ?? this.quantidadeParcela,
-        valorAcrescimoParcelaTotal:
-            valorAcrescimoParcelaTotal ?? this.valorAcrescimoParcelaTotal,
-      );
-
   @override
   List<Object> get props => [
         ...super.props,
