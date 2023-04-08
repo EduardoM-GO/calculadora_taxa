@@ -1,4 +1,6 @@
 import 'package:calculadora_taxa/app/core/domain/use_cases/calcular_taxa_pix_use_case.dart';
+import 'package:calculadora_taxa/app/core/extensions/double_extension.dart';
+import 'package:calculadora_taxa/app/core/mask/real_mask.dart';
 import 'package:calculadora_taxa/app/feature/home/view/pix/store/pix_store.dart';
 import 'package:calculadora_taxa/app/feature/widgets/list_view_widget.dart';
 import 'package:flutter/material.dart';
@@ -16,28 +18,40 @@ class _PixViewState extends State<PixView> {
   late final PixStore store;
   late final TextEditingController valorReceberController;
   late final TextEditingController valorCobrarController;
+  late final TextEditingController percentualTaxaController;
+  late final TextEditingController valorTaxaController;
+  late final RealMask realMask;
 
   @override
   void initState() {
     super.initState();
+    realMask = RealMask();
     store = PixStore(GetIt.I.get<CalcularTaxaPixUseCase>());
-    valorReceberController = TextEditingController(text: '');
-    valorCobrarController = TextEditingController(text: '');
+    valorReceberController = TextEditingController();
+    valorCobrarController = TextEditingController();
+    percentualTaxaController = TextEditingController();
+    valorTaxaController = TextEditingController();
     store.addListener(() {
-      final valorReceberString = store.valorReceber.toString();
+      final valorReceberString = realMask.addMask(store.valorReceber);
       if (valorReceberController.text != valorReceberString) {
         valorReceberController.text = valorReceberString;
       }
-      final valorCobrarString = store.valorCobrar.toString();
+      final valorCobrarString = realMask.addMask(store.valorCobrar);
       if (valorCobrarController.text != valorCobrarString) {
         valorCobrarController.text = valorCobrarString;
       }
+      percentualTaxaController.text = store.percentualTaxa.formatoPercentual;
+      valorTaxaController.text = realMask.addMask(store.valorTaxa);
     });
   }
 
   @override
   void dispose() {
     store.dispose();
+    valorReceberController.dispose();
+    valorCobrarController.dispose();
+    percentualTaxaController.dispose();
+    valorTaxaController.dispose();
     super.dispose();
   }
 
@@ -46,50 +60,45 @@ class _PixViewState extends State<PixView> {
     return ListViewWidget(
       children: [
         TextField(
-          controller: valorReceberController,
+          controller: valorCobrarController,
           decoration: const InputDecoration(
-            label: Text('Valor Receber'),
+            label: Text('Se você cobrar'),
           ),
-          keyboardType: TextInputType.number,
           inputFormatters: [
-            FilteringTextInputFormatter.allow(RegExp(r'[\d,]'))
+            FilteringTextInputFormatter.allow(RegExp(r'[\d,]')),
+            realMask
           ],
-          onChanged: (value) => store.calculaValorCobrar(
-            valorReceber: double.tryParse(value.replaceAll(',', '.')) ?? 0,
+          onChanged: (value) => store.calculaValorReceber(
+            valorCobrar: realMask.removerMask(value),
           ),
         ),
         TextField(
-          controller: valorCobrarController,
+          controller: valorReceberController,
           decoration: const InputDecoration(
-            label: Text('Valor Cobrar'),
+            label: Text('Irá receber'),
           ),
+          keyboardType: TextInputType.number,
           inputFormatters: [
-            FilteringTextInputFormatter.allow(RegExp(r'[\d,]'))
+            FilteringTextInputFormatter.allow(RegExp(r'[\d]')),
+            realMask
           ],
-          onChanged: (value) => store.calculaValorReceber(
-            valorCobrar: double.tryParse(value.replaceAll(',', '.')) ?? 0,
+          onChanged: (value) => store.calculaValorCobrar(
+            valorReceber: realMask.removerMask(value),
           ),
         ),
-        AnimatedBuilder(
-          animation: store,
-          builder: (context, child) => TextField(
-            readOnly: true,
-            decoration: const InputDecoration(
-              label: Text('Taxa (%)'),
-            ),
-            controller:
-                TextEditingController(text: store.percentualTaxa.toString()),
+        TextField(
+          readOnly: true,
+          decoration: const InputDecoration(
+            label: Text('Taxa (%)'),
           ),
+          controller: percentualTaxaController,
         ),
-        AnimatedBuilder(
-          animation: store,
-          builder: (context, child) => TextField(
-            readOnly: true,
-            decoration: const InputDecoration(
-              label: Text('Taxa'),
-            ),
-            controller: TextEditingController(text: store.valorTaxa.toString()),
+        TextField(
+          readOnly: true,
+          decoration: const InputDecoration(
+            label: Text('Valor Taxa'),
           ),
+          controller: valorTaxaController,
         ),
       ],
     );
