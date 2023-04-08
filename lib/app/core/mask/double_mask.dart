@@ -1,3 +1,5 @@
+// ignore_for_file: lines_longer_than_80_chars
+
 import 'package:flutter/services.dart';
 
 class DoubleMask extends TextInputFormatter {
@@ -61,7 +63,8 @@ class DoubleMask extends TextInputFormatter {
     if (decimal.isEmpty) {
       decimal.write(valorRegex?.group(3));
     }
-    return '${separaMilhares ? addSeparadorMilhares(valorRegex?.group(1) ?? '') : valorRegex?.group(1) ?? ''}${(quantidadeCasaDecimal ?? 4) > 0 ? ',' : ''}'
+    return '${separaMilhares ? addSeparadorMilhares(valorRegex?.group(1) ?? '') : valorRegex?.group(1) ?? ''}'
+        '${(quantidadeCasaDecimal ?? 4) > 0 ? ',' : ''}'
         '${quantidadeCasaDecimal != null ? decimal.toString().substring(0, quantidadeCasaDecimal) : decimal.toString()}';
   }
 
@@ -74,8 +77,7 @@ class DoubleMask extends TextInputFormatter {
     final valorSemMascara =
         RegExp(r'\b(\d{1,3})((\d{3})*)\b(,?\d*)?').firstMatch(textEdit.text);
 
-    final valorRetorno = StringBuffer();
-    valorRetorno.write(valorSemMascara?.group(1) ?? '');
+    final valorRetorno = StringBuffer()..write(valorSemMascara?.group(1) ?? '');
 
     final valorDeveAddMascara =
         RegExp(r'(\d{3})').allMatches(valorSemMascara?.group(2) ?? '').toList();

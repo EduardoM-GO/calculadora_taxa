@@ -1,4 +1,6 @@
+import 'package:calculadora_taxa/app/core/domain/use_cases/get_taxas_use_case.dart';
 import 'package:calculadora_taxa/app/core/domain/use_cases/set_taxas_use_case.dart';
+import 'package:calculadora_taxa/app/core/extensions/double_extension.dart';
 import 'package:calculadora_taxa/app/core/mask/percentual_mask.dart';
 import 'package:calculadora_taxa/app/feature/configuracao/store/configuracao_store.dart';
 import 'package:calculadora_taxa/app/feature/widgets/dialogs_widget.dart';
@@ -21,29 +23,52 @@ class _ConfiguracaoViewState extends State<ConfiguracaoView> {
   late final TextEditingController cartaoCreditoTaxaParceladoController;
   late final TextEditingController cartaoDebitoTaxaController;
   late final TextEditingController pixTaxaController;
+  late final FocusNode cartaoCreditoTaxaFocus;
+  late final FocusNode cartaoCreditoTaxaParceladoFocus;
+  late final FocusNode cartaoDebitoTaxaFocus;
+  late final FocusNode pixTaxaFocus;
 
   @override
   void initState() {
     super.initState();
-    cartaoCreditoTaxaController = TextEditingController(text: '0.00%');
-    cartaoCreditoTaxaParceladoController = TextEditingController(text: '0.00%');
-    cartaoDebitoTaxaController = TextEditingController(text: '0.00%');
-    pixTaxaController = TextEditingController(text: '0.00%');
-    store = ConfiguracaoStore(GetIt.I.get<SetTaxasUseCase>());
+    cartaoCreditoTaxaController = TextEditingController();
+    cartaoCreditoTaxaParceladoController = TextEditingController();
+    cartaoDebitoTaxaController = TextEditingController();
+    pixTaxaController = TextEditingController();
 
-    store.addListener(() {
-      final value = store.value;
-      if (value is ConfiguracaoLoadingState) {
-        DialogsWidget.loading(context: context, title: 'Salvando ...');
-      } else if (value is ConfiguracaoSuccessState) {
-        context
-          ..pop()
-          ..pop();
-      } else if (value is ConfiguracaoFailureState) {
-        context.pop();
-        DialogsWidget.warning(context: context, message: value.erro);
-      }
-    });
+    ///Focus
+    cartaoCreditoTaxaFocus = FocusNode();
+    cartaoCreditoTaxaParceladoFocus = FocusNode();
+    cartaoDebitoTaxaFocus = FocusNode();
+    pixTaxaFocus = FocusNode();
+
+    store = ConfiguracaoStore(
+      GetIt.I.get<SetTaxasUseCase>(),
+      GetIt.I.get<GetTaxasUseCase>(),
+    );
+    store
+      ..addListener(() {
+        final value = store.value;
+        if (value is ConfiguracaoLoadingState) {
+          DialogsWidget.loading(context: context, title: 'Salvando ...');
+        } else if (value is ConfiguracaoSuccessState) {
+          context
+            ..pop()
+            ..pop();
+        } else if (value is ConfiguracaoFailureState) {
+          context.pop();
+          DialogsWidget.warning(context: context, message: value.erro);
+        } else if (value is ConfiguracaoGetTaxaState) {
+          pixTaxaController.text = value.pix.percentualTaxa.formatoPercentual;
+          cartaoDebitoTaxaController.text =
+              value.cartaoDebito.percentualTaxa.formatoPercentual;
+          cartaoCreditoTaxaController.text =
+              value.cartaoCredito.percentualTaxa.formatoPercentual;
+          cartaoCreditoTaxaParceladoController.text =
+              value.cartaoCredito.percentualTaxaParcelado.formatoPercentual;
+        }
+      })
+      ..get();
   }
 
   @override
@@ -52,6 +77,10 @@ class _ConfiguracaoViewState extends State<ConfiguracaoView> {
     cartaoCreditoTaxaParceladoController.dispose();
     cartaoDebitoTaxaController.dispose();
     pixTaxaController.dispose();
+    cartaoCreditoTaxaFocus.dispose();
+    cartaoCreditoTaxaParceladoFocus.dispose();
+    cartaoDebitoTaxaFocus.dispose();
+    pixTaxaFocus.dispose();
     store.dispose();
     super.dispose();
   }
@@ -66,20 +95,20 @@ class _ConfiguracaoViewState extends State<ConfiguracaoView> {
             onPressed: () {
               store.salvar(
                 cartaoCreditoTaxa: double.tryParse(
-                      cartaoCreditoTaxaController.text.replaceAll(',', '.'),
+                      cartaoCreditoTaxaController.text.replaceAll('%', ''),
                     ) ??
                     0,
                 cartaoCreditoTaxaParcelado: double.tryParse(
                       cartaoCreditoTaxaParceladoController.text
-                          .replaceAll(',', '.'),
+                          .replaceAll('%', ''),
                     ) ??
                     0,
                 cartaoDebitoTaxa: double.tryParse(
-                      cartaoDebitoTaxaController.text.replaceAll(',', '.'),
+                      cartaoDebitoTaxaController.text.replaceAll('%', ''),
                     ) ??
                     0,
                 pixTaxa: double.tryParse(
-                      pixTaxaController.text.replaceAll(',', '.'),
+                      pixTaxaController.text.replaceAll('%', ''),
                     ) ??
                     0,
               );
@@ -95,6 +124,8 @@ class _ConfiguracaoViewState extends State<ConfiguracaoView> {
             decoration: const InputDecoration(
               label: Text('Cartão Crédito Taxa - À vista'),
             ),
+            focusNode: cartaoCreditoTaxaFocus,
+            textInputAction: TextInputAction.next,
             keyboardType: TextInputType.number,
             inputFormatters: [
               FilteringTextInputFormatter.allow(RegExp(r'[\d,]')),
@@ -106,6 +137,8 @@ class _ConfiguracaoViewState extends State<ConfiguracaoView> {
             decoration: const InputDecoration(
               label: Text('Cartão Crédito Taxa - Parcelado'),
             ),
+            focusNode: cartaoCreditoTaxaParceladoFocus,
+            textInputAction: TextInputAction.next,
             keyboardType: TextInputType.number,
             inputFormatters: [
               FilteringTextInputFormatter.allow(RegExp(r'[\d,]')),
@@ -117,6 +150,8 @@ class _ConfiguracaoViewState extends State<ConfiguracaoView> {
             decoration: const InputDecoration(
               label: Text('Cartão Débito Taxa'),
             ),
+            focusNode: cartaoDebitoTaxaFocus,
+            textInputAction: TextInputAction.next,
             keyboardType: TextInputType.number,
             inputFormatters: [
               FilteringTextInputFormatter.allow(RegExp(r'[\d,]')),
@@ -128,6 +163,8 @@ class _ConfiguracaoViewState extends State<ConfiguracaoView> {
             decoration: const InputDecoration(
               label: Text('Pix Taxa'),
             ),
+            focusNode: pixTaxaFocus,
+            textInputAction: TextInputAction.next,
             keyboardType: TextInputType.number,
             inputFormatters: [
               FilteringTextInputFormatter.allow(RegExp(r'[\d,]')),
