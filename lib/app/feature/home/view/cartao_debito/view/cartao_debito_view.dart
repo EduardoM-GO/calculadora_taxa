@@ -72,14 +72,14 @@ class _CartaoDebitoViewState extends State<CartaoDebitoView> {
             ),
           ),
           TextField(
-            readOnly: true,
+            enabled: false,
             decoration: const InputDecoration(
               label: Text('Taxa (%)'),
             ),
             controller: percentualTaxaController,
           ),
           TextField(
-            readOnly: true,
+            enabled: false,
             decoration: const InputDecoration(
               label: Text('Valor Taxa'),
             ),

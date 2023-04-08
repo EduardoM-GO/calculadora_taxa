@@ -14,19 +14,24 @@ class HomeView extends StatelessWidget {
       length: 3,
       child: Scaffold(
         appBar: AppBar(
+          elevation: 0,
+          title: Text(
+            'Calculadora de Taxa',
+            style: TextStyle(color: Theme.of(context).colorScheme.primary),
+          ),
+          bottom: const TabBar(
+            tabs: [
+              Text('PIX'),
+              Text('DÉBITO'),
+              Text('CRÉDITO'),
+            ],
+          ),
           actions: [
             IconButton(
               onPressed: () => context.push(RouteName.configuracao.path),
               icon: const Icon(Icons.settings),
             )
           ],
-          bottom: const TabBar(
-            tabs: [
-              Text('Pix'),
-              Text('Debito'),
-              Text('Credito'),
-            ],
-          ),
         ),
         body: const TabBarView(
           children: [

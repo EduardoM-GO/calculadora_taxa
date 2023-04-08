@@ -14,7 +14,7 @@ class ListViewWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => ListView.separated(
-        separatorBuilder: (context, index) => const SizedBox(height: 8),
+        separatorBuilder: (context, index) => const SizedBox(height: 16),
         padding: padding ??
             EdgeInsets.only(
               top: 16,

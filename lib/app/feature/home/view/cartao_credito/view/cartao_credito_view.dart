@@ -76,14 +76,14 @@ class _CartaoCreditoViewState extends State<CartaoCreditoView> {
             ),
           ),
           TextField(
-            readOnly: true,
+            enabled: false,
             decoration: const InputDecoration(
               label: Text('Taxa (%)'),
             ),
             controller: percentualTaxaController,
           ),
           TextField(
-            readOnly: true,
+            enabled: false,
             decoration: const InputDecoration(
               label: Text('Valor Taxa'),
             ),
@@ -126,7 +126,18 @@ class _CartaoCreditoViewState extends State<CartaoCreditoView> {
             },
           ),
           TextField(
-            readOnly: true,
+            enabled: false,
+            controller: TextEditingController(
+              text: realMask.addMask(store.valorDaParcela),
+            ),
+            decoration: const InputDecoration(
+              label: Text(
+                'Valor das parcelas:',
+              ),
+            ),
+          ),
+          TextField(
+            enabled: false,
             controller: TextEditingController(
               text: realMask.addMask(store.valorAcrescimoParcelaTotal),
             ),
@@ -138,7 +149,7 @@ class _CartaoCreditoViewState extends State<CartaoCreditoView> {
             ),
           ),
           TextField(
-            readOnly: true,
+            enabled: false,
             controller: TextEditingController(
               text: realMask.addMask(
                 store.valorCobrar + store.valorAcrescimoParcelaTotal,

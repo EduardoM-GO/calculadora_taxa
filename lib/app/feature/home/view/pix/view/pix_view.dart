@@ -73,14 +73,14 @@ class _PixViewState extends State<PixView> {
           ),
         ),
         TextField(
-          readOnly: true,
+          enabled: false,
           decoration: const InputDecoration(
             label: Text('Taxa (%)'),
           ),
           controller: percentualTaxaController,
         ),
         TextField(
-          readOnly: true,
+          enabled: false,
           decoration: const InputDecoration(
             label: Text('Valor Taxa'),
           ),
