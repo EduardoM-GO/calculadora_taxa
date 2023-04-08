@@ -63,6 +63,7 @@ class _CartaoDebitoViewState extends State<CartaoDebitoView> {
             decoration: const InputDecoration(
               label: Text('Se você cobrar'),
             ),
+            keyboardType: TextInputType.number,
             inputFormatters: [
               FilteringTextInputFormatter.allow(RegExp(r'[\d]')),
               realMask
