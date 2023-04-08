@@ -22,7 +22,6 @@ void main() {
     cartaoCreditoTaxa = const CartaoCreditoTaxa(
       percentualTaxa: 1,
       percentualTaxaParcelado: 2.8,
-      percentualTaxaPorParcela: 3.6,
     );
     cartaoTaxa = const Taxa(percentualTaxa: 2);
     pixTaxa = const Taxa(percentualTaxa: 3.33);
@@ -42,12 +41,6 @@ void main() {
           () => sharedPreferences.setDouble(
             ChavesPreferences.cartaoCreditoParcelado.name,
             cartaoCreditoTaxa.percentualTaxaParcelado,
-          ),
-        ).thenAnswer((_) async => true);
-        when(
-          () => sharedPreferences.setDouble(
-            ChavesPreferences.cartaoCreditoPorParcela.name,
-            cartaoCreditoTaxa.percentualTaxaPorParcela,
           ),
         ).thenAnswer((_) async => true);
 
@@ -74,12 +67,6 @@ void main() {
               cartaoCreditoTaxa.percentualTaxaParcelado,
             ),
           ).thenAnswer((_) async => true);
-          when(
-            () => sharedPreferences.setDouble(
-              ChavesPreferences.cartaoCreditoPorParcela.name,
-              cartaoCreditoTaxa.percentualTaxaPorParcela,
-            ),
-          ).thenAnswer((_) async => true);
 
           final result =
               await cache.setTaxaCartaoCredito(taxa: cartaoCreditoTaxa);
@@ -102,12 +89,6 @@ void main() {
               cartaoCreditoTaxa.percentualTaxaParcelado,
             ),
           ).thenThrow(Exception());
-          when(
-            () => sharedPreferences.setDouble(
-              ChavesPreferences.cartaoCreditoPorParcela.name,
-              cartaoCreditoTaxa.percentualTaxaPorParcela,
-            ),
-          ).thenAnswer((_) async => true);
 
           final result =
               await cache.setTaxaCartaoCredito(taxa: cartaoCreditoTaxa);
@@ -117,34 +98,6 @@ void main() {
             isA<Exception>(),
           );
         });
-      });
-      test('cartaoCreditoPorParcela', () async {
-        when(
-          () => sharedPreferences.setDouble(
-            ChavesPreferences.cartaoCredito.name,
-            cartaoCreditoTaxa.percentualTaxa,
-          ),
-        ).thenAnswer((_) async => true);
-        when(
-          () => sharedPreferences.setDouble(
-            ChavesPreferences.cartaoCreditoParcelado.name,
-            cartaoCreditoTaxa.percentualTaxaParcelado,
-          ),
-        ).thenAnswer((_) async => true);
-        when(
-          () => sharedPreferences.setDouble(
-            ChavesPreferences.cartaoCreditoPorParcela.name,
-            cartaoCreditoTaxa.percentualTaxaPorParcela,
-          ),
-        ).thenThrow(Exception());
-
-        final result =
-            await cache.setTaxaCartaoCredito(taxa: cartaoCreditoTaxa);
-        expect(result.isError(), true);
-        expect(
-          result.fold(id, id),
-          isA<Exception>(),
-        );
       });
     });
 
@@ -160,11 +113,6 @@ void main() {
             ChavesPreferences.cartaoCreditoParcelado.name,
           ),
         ).thenReturn(cartaoCreditoTaxa.percentualTaxaParcelado);
-        when(
-          () => sharedPreferences.getDouble(
-            ChavesPreferences.cartaoCreditoPorParcela.name,
-          ),
-        ).thenReturn(cartaoCreditoTaxa.percentualTaxaPorParcela);
 
         final result = cache.getTaxaCartaoCredito();
         expect(result.isSuccess(), true);
@@ -189,11 +137,6 @@ void main() {
               ChavesPreferences.cartaoCreditoParcelado.name,
             ),
           ).thenReturn(cartaoCreditoTaxa.percentualTaxaParcelado);
-          when(
-            () => sharedPreferences.getDouble(
-              ChavesPreferences.cartaoCreditoPorParcela.name,
-            ),
-          ).thenReturn(cartaoCreditoTaxa.percentualTaxaPorParcela);
 
           final result = cache.getTaxaCartaoCredito();
           expect(result.isError(), true);
@@ -211,35 +154,6 @@ void main() {
           when(
             () => sharedPreferences.getDouble(
               ChavesPreferences.cartaoCreditoParcelado.name,
-            ),
-          ).thenThrow(Exception());
-          when(
-            () => sharedPreferences.getDouble(
-              ChavesPreferences.cartaoCreditoPorParcela.name,
-            ),
-          ).thenReturn(cartaoCreditoTaxa.percentualTaxaPorParcela);
-
-          final result = cache.getTaxaCartaoCredito();
-          expect(result.isError(), true);
-          expect(
-            result.fold(id, id),
-            isA<Exception>(),
-          );
-        });
-        test('cartaoCreditoPorParcela', () {
-          when(
-            () => sharedPreferences.getDouble(
-              ChavesPreferences.cartaoCredito.name,
-            ),
-          ).thenReturn(cartaoCreditoTaxa.percentualTaxa);
-          when(
-            () => sharedPreferences.getDouble(
-              ChavesPreferences.cartaoCreditoParcelado.name,
-            ),
-          ).thenReturn(cartaoCreditoTaxa.percentualTaxaParcelado);
-          when(
-            () => sharedPreferences.getDouble(
-              ChavesPreferences.cartaoCreditoPorParcela.name,
             ),
           ).thenThrow(Exception());
 

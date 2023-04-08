@@ -59,8 +59,10 @@ class CalcularTaxaCartaoCreditoUseCaseImpl
       ResultadoTaxaCartaoCredito(
         valorRecebido: valorRecebido,
         valorCobrado: valorCobrado,
+        percentualTaxa: percentualTaxa * 100,
         quantidadeParcela: valorCalculo.quantidadeParcela,
         valorAcrescimoParcelaTotal: valorAcrescimoParcelaTotal.casasDecimas(2),
+        percentualTaxaParcela: valorCalculo.taxaParcela,
       ),
     );
   }

@@ -7,12 +7,15 @@ class ResultadoTaxaCartaoCredito extends ResultadoTaxa {
   final int quantidadeParcela;
   final double valorAcrescimoPorParcela;
   final double valorAcrescimoParcelaTotal;
+  final double percentualTaxaParcela;
 
   ResultadoTaxaCartaoCredito({
     required super.valorCobrado,
     required super.valorRecebido,
+    required super.percentualTaxa,
     required this.quantidadeParcela,
     required this.valorAcrescimoParcelaTotal,
+    required this.percentualTaxaParcela,
   })  : valorAcrescimoPorParcela =
             (valorAcrescimoParcelaTotal / quantidadeParcela).casasDecimas(2),
         valorDaParcela =

@@ -33,7 +33,11 @@ void main() {
       expect(result.isSuccess(), true);
       expect(
         result.fold(id, id),
-        const ResultadoTaxa(valorRecebido: 97.61, valorCobrado: 100),
+        const ResultadoTaxa(
+          valorRecebido: 97.61,
+          valorCobrado: 100,
+          percentualTaxa: 2.39,
+        ),
       );
     });
     test('200', () async {
@@ -45,7 +49,11 @@ void main() {
       expect(result.isSuccess(), true);
       expect(
         result.fold(id, id),
-        const ResultadoTaxa(valorRecebido: 195.22, valorCobrado: 200),
+        const ResultadoTaxa(
+          valorRecebido: 195.22,
+          valorCobrado: 200,
+          percentualTaxa: 2.39,
+        ),
       );
     });
     test('259.69', () async {
@@ -59,7 +67,11 @@ void main() {
       expect(result.isSuccess(), true);
       expect(
         result.fold(id, id),
-        const ResultadoTaxa(valorRecebido: 253.48, valorCobrado: 259.69),
+        const ResultadoTaxa(
+          valorRecebido: 253.48,
+          valorCobrado: 259.69,
+          percentualTaxa: 2.39,
+        ),
       );
     });
   });
@@ -80,7 +92,11 @@ void main() {
       expect(result.isSuccess(), true);
       expect(
         result.fold(id, id),
-        const ResultadoTaxa(valorRecebido: 100, valorCobrado: 102.45),
+        const ResultadoTaxa(
+          valorRecebido: 100,
+          valorCobrado: 102.45,
+          percentualTaxa: 2.39,
+        ),
       );
     });
     test('200', () async {
@@ -94,7 +110,11 @@ void main() {
       expect(result.isSuccess(), true);
       expect(
         result.fold(id, id),
-        const ResultadoTaxa(valorRecebido: 200, valorCobrado: 204.9),
+        const ResultadoTaxa(
+          valorRecebido: 200,
+          valorCobrado: 204.9,
+          percentualTaxa: 2.39,
+        ),
       );
     });
     test('259.69', () async {
@@ -108,7 +128,11 @@ void main() {
       expect(result.isSuccess(), true);
       expect(
         result.fold(id, id),
-        const ResultadoTaxa(valorRecebido: 259.69, valorCobrado: 266.05),
+        const ResultadoTaxa(
+          valorRecebido: 259.69,
+          valorCobrado: 266.05,
+          percentualTaxa: 2.39,
+        ),
       );
     });
   });

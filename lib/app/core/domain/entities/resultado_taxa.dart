@@ -4,9 +4,11 @@ import 'package:equatable/equatable.dart';
 class ResultadoTaxa extends Equatable {
   final double valorRecebido;
   final double valorCobrado;
+  final double percentualTaxa;
   const ResultadoTaxa({
     required this.valorRecebido,
     required this.valorCobrado,
+    required this.percentualTaxa,
   });
 
   double get valorTaxa => valorCobrado - valorRecebido;

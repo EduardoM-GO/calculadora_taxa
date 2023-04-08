@@ -32,6 +32,7 @@ class CalcularTaxaCartaoDebitoUseCaseImpl
         ResultadoTaxa(
           valorRecebido: valorCalculo.valor - valorTaxa,
           valorCobrado: valorCalculo.valor,
+          percentualTaxa: percentualTaxa * 100,
         ),
       );
     } else {
@@ -41,6 +42,7 @@ class CalcularTaxaCartaoDebitoUseCaseImpl
         ResultadoTaxa(
           valorRecebido: valorCalculo.valor,
           valorCobrado: valorCobrar,
+          percentualTaxa: percentualTaxa * 100,
         ),
       );
     }

@@ -7,6 +7,8 @@ void main() {
       valorCobrado: 100,
       valorRecebido: 102,
       quantidadeParcela: 3,
+      percentualTaxa: 1,
+      percentualTaxaParcela: 1,
       valorAcrescimoParcelaTotal: 5.69,
     );
 

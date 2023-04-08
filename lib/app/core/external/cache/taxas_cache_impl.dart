@@ -10,8 +10,7 @@ enum ChavesPreferences {
   pix,
   cartaoDebito,
   cartaoCredito,
-  cartaoCreditoParcelado,
-  cartaoCreditoPorParcela
+  cartaoCreditoParcelado
 }
 
 class TaxasCacheImpl implements TaxasCache {
@@ -30,16 +29,10 @@ class TaxasCacheImpl implements TaxasCache {
           ) ??
           0;
 
-      final percentualTaxaPorParcela = _sharedPreferences.getDouble(
-            ChavesPreferences.cartaoCreditoPorParcela.name,
-          ) ??
-          0;
-
       return Success(
         CartaoCreditoTaxa(
           percentualTaxa: percentualTaxa,
           percentualTaxaParcelado: percentualTaxaParcelado,
-          percentualTaxaPorParcela: percentualTaxaPorParcela,
         ),
       );
     } catch (exception) {
@@ -85,10 +78,6 @@ class TaxasCacheImpl implements TaxasCache {
         taxa.percentualTaxaParcelado,
       );
 
-      await _sharedPreferences.setDouble(
-        ChavesPreferences.cartaoCreditoPorParcela.name,
-        taxa.percentualTaxaPorParcela,
-      );
       return const Success(unit);
     } catch (exception) {
       return Failure(Exception(exception));

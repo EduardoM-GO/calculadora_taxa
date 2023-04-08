@@ -22,7 +22,6 @@ void main() {
     cartaoCreditoTaxa = const CartaoCreditoTaxa(
       percentualTaxa: 1,
       percentualTaxaParcelado: 2.8,
-      percentualTaxaPorParcela: 3.6,
     );
     cartaoTaxa = const Taxa(percentualTaxa: 2);
     pixTaxa = const Taxa(percentualTaxa: 3.33);
