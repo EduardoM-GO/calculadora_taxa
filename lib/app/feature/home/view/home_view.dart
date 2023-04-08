@@ -1,3 +1,4 @@
+import 'package:calculadora_taxa/app/feature/home/view/cartao_debito/cartao_debito_view.dart';
 import 'package:calculadora_taxa/app/feature/home/view/pix/view/pix_view.dart';
 import 'package:calculadora_taxa/app/routes/route_name.dart';
 import 'package:flutter/material.dart';
@@ -26,10 +27,10 @@ class HomeView extends StatelessWidget {
             ],
           ),
         ),
-        body: PageView(
-          children: const [
+        body: const TabBarView(
+          children: [
             PixView(),
-            SizedBox(),
+            CartaoDebitoView(),
             SizedBox(),
           ],
         ),

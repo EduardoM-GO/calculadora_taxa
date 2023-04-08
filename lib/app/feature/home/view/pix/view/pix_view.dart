@@ -65,7 +65,7 @@ class _PixViewState extends State<PixView> {
             label: Text('Se você cobrar'),
           ),
           inputFormatters: [
-            FilteringTextInputFormatter.allow(RegExp(r'[\d,]')),
+            FilteringTextInputFormatter.allow(RegExp(r'[\d]')),
             realMask
           ],
           onChanged: (value) => store.calculaValorReceber(
