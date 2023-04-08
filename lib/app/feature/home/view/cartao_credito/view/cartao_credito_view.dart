@@ -1,36 +1,38 @@
-import 'package:calculadora_taxa/app/core/domain/use_cases/calcular_taxa_cartao_debito_use_case.dart';
+import 'package:calculadora_taxa/app/core/domain/use_cases/calcular_taxa_cartao_credito_use_case.dart';
 import 'package:calculadora_taxa/app/core/extensions/double_extension.dart';
 import 'package:calculadora_taxa/app/core/mask/real_mask.dart';
-import 'package:calculadora_taxa/app/feature/home/view/cartao_debito/store/cartao_debito_store.dart';
+import 'package:calculadora_taxa/app/feature/home/view/cartao_credito/store/cartao_credito_store.dart';
 import 'package:calculadora_taxa/app/feature/widgets/list_view_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get_it/get_it.dart';
 
-class CartaoDebitoView extends StatefulWidget {
-  const CartaoDebitoView({Key? key}) : super(key: key);
+class CartaoCreditoView extends StatefulWidget {
+  const CartaoCreditoView({Key? key}) : super(key: key);
 
   @override
-  State<CartaoDebitoView> createState() => _CartaoDebitoViewState();
+  State<CartaoCreditoView> createState() => _CartaoCreditoViewState();
 }
 
-class _CartaoDebitoViewState extends State<CartaoDebitoView> {
-  late final CartaoDebitoStore store;
+class _CartaoCreditoViewState extends State<CartaoCreditoView> {
+  late final CartaoCreditoStore store;
   late final TextEditingController valorReceberController;
   late final TextEditingController valorCobrarController;
   late final TextEditingController percentualTaxaController;
   late final TextEditingController valorTaxaController;
-  late final RealMask realMask;
+  late final TextEditingController quantidadeParcelaController;
 
+  late final RealMask realMask;
   @override
   void initState() {
     super.initState();
-    realMask = RealMask();
-    store = CartaoDebitoStore(GetIt.I.get<CalcularTaxaCartaoDebitoUseCase>());
+    store = CartaoCreditoStore(GetIt.I.get<CalcularTaxaCartaoCreditoUseCase>());
     valorReceberController = TextEditingController();
     valorCobrarController = TextEditingController();
     percentualTaxaController = TextEditingController();
     valorTaxaController = TextEditingController();
+    quantidadeParcelaController = TextEditingController(text: '1x');
+    realMask = RealMask();
     store.addListener(() {
       final valorReceberString = realMask.addMask(store.valorReceber);
       if (valorReceberController.text != valorReceberString) {
@@ -42,6 +44,7 @@ class _CartaoDebitoViewState extends State<CartaoDebitoView> {
       }
       percentualTaxaController.text = store.percentualTaxa.formatoPercentual;
       valorTaxaController.text = realMask.addMask(store.valorTaxa);
+      setState(() {});
     });
   }
 
@@ -52,6 +55,7 @@ class _CartaoDebitoViewState extends State<CartaoDebitoView> {
     valorCobrarController.dispose();
     percentualTaxaController.dispose();
     valorTaxaController.dispose();
+    quantidadeParcelaController.dispose();
     super.dispose();
   }
 
@@ -72,6 +76,20 @@ class _CartaoDebitoViewState extends State<CartaoDebitoView> {
             ),
           ),
           TextField(
+            readOnly: true,
+            decoration: const InputDecoration(
+              label: Text('Taxa (%)'),
+            ),
+            controller: percentualTaxaController,
+          ),
+          TextField(
+            readOnly: true,
+            decoration: const InputDecoration(
+              label: Text('Valor Taxa'),
+            ),
+            controller: valorTaxaController,
+          ),
+          TextField(
             controller: valorReceberController,
             decoration: const InputDecoration(
               label: Text('Irá receber'),
@@ -85,19 +103,54 @@ class _CartaoDebitoViewState extends State<CartaoDebitoView> {
               valorReceber: realMask.removerMask(value),
             ),
           ),
-          TextField(
-            readOnly: true,
+          DropdownButtonFormField<QuantidadeParcelas>(
             decoration: const InputDecoration(
-              label: Text('Taxa (%)'),
+              label: Text('Número de parcelas(1x - 18x)'),
             ),
-            controller: percentualTaxaController,
+            items: QuantidadeParcelas.values
+                .map(
+                  (e) => DropdownMenuItem(
+                    value: e,
+                    child: Text(
+                      e.nome,
+                      maxLines: 1,
+                    ),
+                  ),
+                )
+                .toList(),
+            value: store.quantidadeParcela,
+            onChanged: (value) {
+              if (value != null) {
+                store.quantidadeParcela = value;
+              }
+            },
           ),
           TextField(
             readOnly: true,
-            decoration: const InputDecoration(
-              label: Text('Valor Taxa'),
+            controller: TextEditingController(
+              text: realMask.addMask(store.valorAcrescimoParcelaTotal),
             ),
-            controller: valorTaxaController,
+            decoration: InputDecoration(
+              label: Text(
+                'Parcelamento comprador: '
+                '${(store.percentualTaxaParcela * 100).formatoPercentual}',
+              ),
+            ),
+          ),
+          TextField(
+            readOnly: true,
+            controller: TextEditingController(
+              text: realMask.addMask(
+                store.valorCobrar + store.valorAcrescimoParcelaTotal,
+              ),
+            ),
+            decoration: InputDecoration(
+              label: Text(
+                'Valor final para o comprador:('
+                '${realMask.addMask(store.valorCobrar)} + '
+                '${realMask.addMask(store.valorAcrescimoParcelaTotal)})',
+              ),
+            ),
           ),
         ],
       );

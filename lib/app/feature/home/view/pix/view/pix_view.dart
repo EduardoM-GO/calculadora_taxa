@@ -73,20 +73,6 @@ class _PixViewState extends State<PixView> {
           ),
         ),
         TextField(
-          controller: valorReceberController,
-          decoration: const InputDecoration(
-            label: Text('Irá receber'),
-          ),
-          keyboardType: TextInputType.number,
-          inputFormatters: [
-            FilteringTextInputFormatter.allow(RegExp(r'[\d]')),
-            realMask
-          ],
-          onChanged: (value) => store.calculaValorCobrar(
-            valorReceber: realMask.removerMask(value),
-          ),
-        ),
-        TextField(
           readOnly: true,
           decoration: const InputDecoration(
             label: Text('Taxa (%)'),
@@ -99,6 +85,20 @@ class _PixViewState extends State<PixView> {
             label: Text('Valor Taxa'),
           ),
           controller: valorTaxaController,
+        ),
+        TextField(
+          controller: valorReceberController,
+          decoration: const InputDecoration(
+            label: Text('Irá receber'),
+          ),
+          keyboardType: TextInputType.number,
+          inputFormatters: [
+            FilteringTextInputFormatter.allow(RegExp(r'[\d]')),
+            realMask
+          ],
+          onChanged: (value) => store.calculaValorCobrar(
+            valorReceber: realMask.removerMask(value),
+          ),
         ),
       ],
     );

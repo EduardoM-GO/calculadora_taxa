@@ -31,6 +31,7 @@ class PixStore extends ChangeNotifier {
         _valorCobrar = success.valorCobrado;
         _percentualTaxa = success.percentualTaxa;
         _valorTaxa = success.valorTaxa;
+
         notifyListeners();
       },
       (failure) => null,
@@ -48,6 +49,7 @@ class PixStore extends ChangeNotifier {
         _valorReceber = success.valorRecebido;
         _valorCobrar = success.valorCobrado;
         _percentualTaxa = success.percentualTaxa;
+        _valorTaxa = success.valorTaxa;
         notifyListeners();
       },
       (failure) => null,
